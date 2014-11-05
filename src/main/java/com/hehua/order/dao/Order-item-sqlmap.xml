@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.hehua.order.dao.OrderItemsDAO">
+<!--
+    由系统于2014-08-08 01:02:14生成。
+-->
+<select id="getListByItemIds" resultType="java.lang.Long">
+    select `orderid` from `orderitems` where `itemid` in <foreach item="id" index="index" collection="ids" open="(" separator="," close=")">#{id}</foreach>
+</select>
+
+    <select id="getListByOrderIds" resultType="com.hehua.order.model.OrderItemsModel">
+        select  `id`,`userid`,`orderid`,`itemid`,`skuid`,`quantity`,`buyprice`,`saleprice` from `orderitems` where `orderid` in <foreach item="id" index="index" collection="ids" open="(" separator="," close=")">#{id}</foreach>
+    </select>
+</mapper>

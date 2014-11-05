@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.hehua.order.dao.DeliveryInfoDAO">
+<!--
+    由系统于2014-08-08 01:02:14生成。
+-->
+<select id="getListByOrderIds" resultType="com.hehua.order.model.DeliveryInfoModel">
+    select  `orderid`, `address`, `invoicetype`, `invoicecomment`, `deliverycomment` from `deliveryinfo` where `orderid` in <foreach item="id" index="index" collection="ids" open="(" separator="," close=")">#{id}</foreach>
+</select>
+</mapper>

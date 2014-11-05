@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- mybatis组件自动扫描，参考：https://mybatis.github.io/spring/zh/mappers.html#MapperScannerConfigurer-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+    	<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+        <property name="basePackage" value="com.hehua.order.dao" />
+    </bean>
+
+    <import resource="../mysql-datasource.xml"/>
+    <import resource="jms-consumer-paynotify.xml" />
+    <import resource="jms-consumer-syncOrderToPaiu.xml" />
+    <import resource="jms-consumer-queryKuaidi100.xml" />
+
+    <context:annotation-config/>
+    <context:component-scan base-package="com.hehua.order"/>
+
+
+</beans>

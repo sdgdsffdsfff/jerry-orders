@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.hehua.order.dao.OrdersDAO">
+<!--
+    由系统于2014-08-08 01:02:14生成。
+-->
+<select id="getsByIds" resultType="com.hehua.order.model.OrdersModel">
+    select `id`,`userid`,`totalfee`,`orderfee`,`deliveryfee`,`rebate`,`giftcard`,`recharge`,`direct`,`payed`,`reduce`,`credit`,`outmoney`,`mobile`,`ordertime`,`orderip`,`paytime`,`paytype`,`status`,`attributes` from `orders` where `id` in <foreach item="id" index="index" collection="ids" open="(" separator="," close=")">#{id}</foreach>
+</select>
+    <select id="getByParamsBy"
+            resultType="com.hehua.order.model.OrdersModel">
+        select `id`,`userid`,`totalfee`,`orderfee`,`deliveryfee`,`rebate`,`giftcard`,`recharge`,`direct`,`payed`,`reduce`,`credit`,`outmoney`,`mobile`,`ordertime`,`orderip`,`paytime`,`paytype`,`status`,`attributes` from `orders`
+        <where>
+            <if test="minPrice > 0">
+                <![CDATA[
+                 totalfee > #{minPrice}
+                 ]]>
+            </if>
+            <if test="maxPrice > 0">
+                <![CDATA[
+                and totalfee < #{maxPrice}
+                ]]>
+            </if>
+            <if test="startTime != 0">
+                <![CDATA[
+                and paytime >= #{startTime}
+                ]]>
+            </if>
+            <if test="endTime != 0">
+                <![CDATA[
+                and paytime <= #{endTime}
+                ]]>
+            </if>
+        </where>
+        order by id desc limit #{startPos}, #{endPos}
+    </select>
+    <select id="getCountParmsBy"
+            resultType="java.lang.Integer">
+        select count(`id`) from `orders`
+        <where>
+            <if test="minPrice > 0">
+                <![CDATA[
+                 totalfee >= #{minPrice}
+                 ]]>
+            </if>
+            <if test="maxPrice > 0">
+                <![CDATA[
+                and totalfee <= #{maxPrice}
+                ]]>
+            </if>
+            <if test="startTime != 0">
+                <![CDATA[
+                and paytime >= #{startTime}
+                ]]>
+            </if>
+            <if test="endTime != 0">
+                <![CDATA[
+                and paytime <= #{endTime}
+                ]]>
+            </if>
+        </where>
+    </select>
+</mapper>
